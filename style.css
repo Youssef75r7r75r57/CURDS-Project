@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #121212;
+    color: #eee;
+}
+
+#dashboard.section .cards {
+    margin: 0 0 10px 0 ;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h2 {
+    color: gold;
+    text-align: center;
+    background-color: #111111;
+    padding: 20px 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #ccc;
+    padding: 10px;
+    transition: 0.3s;
+    display: flex;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: gold;
+    color: #000;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+}
+
+
+/* Main content */
+
+.proh {
+    background-color: #1e1e1e;
+    padding: 15.5px;
+}
+
+.prohh{
+    background-color: #1e1e1e;
+    padding: 20.2px;
+    margin-bottom: 10px;
+}
+
+.add-btn1 {
+    display: flex;
+}
+.ser .filc {
+margin-left: -12px;
+}
+.filc {
+    display: inline;
+    align-items: center;
+    color: #000;
+    background: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 12px 15px;
+}
+.filc label {
+    font-weight: bold;
+    color: #333;
+
+}
+/* ====== صندوق البحث كامل ====== */
+.ser {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* يخلي الزرار أقصى اليمين */
+    background: #121212;
+    padding: 0px 15px;
+    border-radius: 12px;
+}
+
+/* ====== label ====== */
+.ser label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* ====== صندوق الإدخال ====== */
+.ser input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: 0.2s;
+    position: absolute;
+    left: 325px;
+}
+
+
+/* ====== زرار Export CSV ====== */
+.ser .btncsv {
+    padding: 8px 18px;
+    background: #007bff; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+.ser .btncsv:hover {
+    background: #0056b3; 
+}
+/* ====== موبايل: اجعل العناصر تحت بعض ====== */
+@media (max-width: 685px) {
+    .ser {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+    }
+    .ser input {
+        position: static;
+        width: 100%;
+    }
+
+    .ser .btncsv {
+        width: 100%;
+    }
+}
+
+
+.main {
+    flex: 1;
+}
+
+.topbar {
+    background: #1e1e1e;
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    background: #1e1e1e;
+    padding: 10px;
+    margin-left: 5px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 6px 10px #000;
+}
+
+.card h3 {
+    color: gold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background: gold;
+    color: #000;
+}
+
+tr:nth-child(even) {
+    background: #2a2a2a;
+}
+
+img {
+    width: 50px;
+    border-radius: 8px;
+}
+
+.actions button {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: gold;
+    color: #000;
+}
+
+.delete-btn {
+    background: crimson;
+    color: #fff;
+}
+.add-btn1,
+.add-btn {
+    background: gold;
+    color: black;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 20px 0 15px 5px;
+    font-weight: bold;
+}
+.add-btn1:hover,
+.add-btn:hover {
+    background: white;
+}
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    color: white;
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: none;
+    background-color: #222;
+    color: #eee;
+}
+
+.modal-content input:focus {
+    border: 1px solid gold;
+    outline: none;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-buttons .close {
+    background: #444;
+    color: white;
+}
+
+.modal-buttons button:hover {
+    opacity: 0.8;
+}
+/* ===== Sections ===== */
+.section {
+    display: none;
+}
+
+/* ===== Search & Filter & Export ===== */
+#categoryFilter,
+#categoryFilter2,
+#searchInput,
+#searchInput2 {
+    padding: 6px 10px;
+    margin: 10px 5px 15px 5px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    outline: none;
+    background: #222;
+    color: #eee;
+}
+
+#categoryFilter:hover,
+#categoryFilter2:hover,
+#searchInput2:hover,
+#searchInput:hover {
+    border-color: gold;
+}
+
+
+/* ===== Image Preview ===== */
+#imagePreview {
+    display: none;
+    margin-top: 10px;
+    max-width: 150px;
+    max-height: 150px;
+    border: 1px solid #555;
+    border-radius: 8px;
+}
+
+/* ===== Table Hover ===== */
+#productTable tbody tr,
+#productTable2 tbody tr {
+    transition: background 0.2s;
+}
+
+#productTable tbody tr:hover,
+#productTable2 tbody tr:hover {
+    background-color: #2e2e2e;
+}
+
+
+/* ===== Table Cells ===== */
+#productTable th,
+#productTable td,
+#productTable2 th,
+#productTable2 td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #555;
+}
+
+/* Inputs Dark Mode */
+#categoryFilter,
+#categoryFilter2,
+#searchInput,
+#searchInput2,
+.modal-content input {
+    background-color: #222;
+    color: #eee;
+}
+
+#categoryFilter:focus,
+#categoryFilter2:focus,
+#searchInput:focus,
+#searchInput2:focus,
+.modal-content input:focus {
+    border-color: gold;
+    outline: none;
+}
+
+
+
+/* ============users & orders============== */
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #111;
+}
+
+.admin-table th, 
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+}
+
+.admin-table th {
+    background: #222;
+    color: gold;
+    text-align: left;
+}
+
+.admin-table tr:hover {
+    background: #1b1b1b;
+}
+
+.settings-box {
+    background: #111;
+    padding: 20px;
+    border-radius: 8px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-box input {
+    padding: 10px;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: white;
+}
+
+.saveBtn {
+    background: gold;
+    color: black;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.saveBtn:hover {
+    background: #ffdb4d;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 35px; /* مساحة للأيقونة داخل الـ input */
+    padding-left: 10px;
+    background: #222;
+    color: #eee;
+    border-radius: 6px;
+    border: 1px solid #555;
+}
+
+.password-wrapper input:focus {
+    border-color: gold;
+    outline: none;
+}
+
+.password-wrapper #togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgb(85, 85, 85);
+    font-size: 16px;
+}
+
+
+
