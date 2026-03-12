@@ -8,6 +8,9 @@
     "axe/forms": "off",
     "no-inline-styles": "off",
     "axe/parsing": "off",
-    "axe/text-alternatives": "off"
+    "axe/text-alternatives": "off",
+    "compat-api/css": [
+      "default"
+    ]
   }
 }
