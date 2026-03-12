@@ -1,0 +1,409 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="brand">
+            <div class="logo">AC</div>
+            <div class="brand-text">
+                <h2>Admin Core</h2>
+                <p>Operations Hub</p>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a href="#" class="active" onclick="showSection('dashboard')">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" onclick="showSection('products')">
+                <i class="fa-solid fa-box"></i>
+                <span>Products</span>
+            </a>
+            <a href="#" onclick="showSection('orders')">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Orders</span>
+            </a>
+            <a href="#" onclick="showSection('users')">
+                <i class="fa-solid fa-user-group"></i>
+                <span>Users</span>
+            </a>
+            <a href="#" onclick="showSection('settings')">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-card">
+                <div>
+                    <p class="muted small">Role</p>
+                    <p class="strong">Super Admin</p>
+                </div>
+                <span class="status status--success">Online</span>
+            </div>
+            <a href="#" class="logout" onclick="logout()">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="global-topbar">
+            <div class="topbar-left">
+                <h1 class="page-title">Admin Dashboard</h1>
+                <div class="chip">
+                    <i class="fa-regular fa-circle-check"></i>
+                    <span>System healthy</span>
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <div class="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search across data, users, and orders">
+                </div>
+                <button class="btn ghost icon-btn" title="Notifications">
+                    <i class="fa-regular fa-bell"></i>
+                </button>
+                <div class="profile">
+                    <div class="avatar">A</div>
+                    <div>
+                        <p class="strong">Admin</p>
+                        <p class="muted small">admin@company.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">Overview</p>
+                    <h2 class="section-title">Performance Snapshot</h2>
+                    <p class="section-sub">Track sales, inventory, and customer momentum in one place.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn ghost">Export Report</button>
+                    <button class="btn primary">Create Update</button>
+                </div>
+            </div>
+
+            <div class="cards">
+                <div class="card kpi">
+                    <div class="kpi-icon">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <div class="kpi-meta">
+                        <p class="kpi-label">Products</p>
+                        <div class="kpi-value" id="countProducts">0</div>
+                        <p class="kpi-trend up"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</p>
+                    </div>
+                </div>
+                <div class="card kpi">
+                    <div class="kpi-icon">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <div class="kpi-meta">
+                        <p class="kpi-label">Orders</p>
+                        <div class="kpi-value" id="countOrders">0</div>
+                        <p class="kpi-trend up"><i class="fa-solid fa-arrow-trend-up"></i> +8% this week</p>
+                    </div>
+                </div>
+                <div class="card kpi">
+                    <div class="kpi-icon">
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+                    <div class="kpi-meta">
+                        <p class="kpi-label">Users</p>
+                        <div class="kpi-value" id="countUsers">0</div>
+                        <p class="kpi-trend up"><i class="fa-solid fa-arrow-trend-up"></i> +15% growth</p>
+                    </div>
+                </div>
+                <div class="card kpi">
+                    <div class="kpi-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div class="kpi-meta">
+                        <p class="kpi-label">Revenue</p>
+                        <div class="kpi-value" id="countRevenue">0</div>
+                        <p class="kpi-trend up"><i class="fa-solid fa-arrow-trend-up"></i> +21% quarter</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Revenue Trend</h3>
+                            <p class="muted small">Last 6 months</p>
+                        </div>
+                        <span class="tag">+18% YoY</span>
+                    </div>
+                    <div class="chart">
+                        <div class="bar" style="--h: 55%"><span>Oct</span></div>
+                        <div class="bar" style="--h: 72%"><span>Nov</span></div>
+                        <div class="bar" style="--h: 62%"><span>Dec</span></div>
+                        <div class="bar" style="--h: 80%"><span>Jan</span></div>
+                        <div class="bar" style="--h: 68%"><span>Feb</span></div>
+                        <div class="bar" style="--h: 92%"><span>Mar</span></div>
+                    </div>
+                </div>
+
+                <div class="panel activity-panel">
+                    <div class="panel-header">
+                        <h3>Recent Activity</h3>
+                        <button class="btn ghost small">View all</button>
+                    </div>
+                    <ul class="activity">
+                        <li>
+                            <span class="dot success"></span>
+                            <div>
+                                <p class="strong">New order created</p>
+                                <p class="muted small">Order #ORD4820 - 2 min ago</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="dot info"></span>
+                            <div>
+                                <p class="strong">Inventory synced</p>
+                                <p class="muted small">Warehouse B - 14 min ago</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="dot warning"></span>
+                            <div>
+                                <p class="strong">Low stock alert</p>
+                                <p class="muted small">Wireless earbuds - 1 hour ago</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="dot success"></span>
+                            <div>
+                                <p class="strong">Payment cleared</p>
+                                <p class="muted small">Invoice #INV119 - 3 hours ago</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="panel stats-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Top Categories</h3>
+                            <p class="muted small">Inventory focus</p>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Electronics</span>
+                        <span class="tag">Wearables</span>
+                        <span class="tag">Accessories</span>
+                        <span class="tag">Home Office</span>
+                    </div>
+                    <div class="progress-list">
+                        <div class="progress-item">
+                            <div class="progress-meta">
+                                <span>Mobile</span>
+                                <span>64%</span>
+                            </div>
+                            <div class="progress-bar"><span style="width: 64%"></span></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-meta">
+                                <span>Audio</span>
+                                <span>48%</span>
+                            </div>
+                            <div class="progress-bar"><span style="width: 48%"></span></div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-meta">
+                                <span>Smart Home</span>
+                                <span>38%</span>
+                            </div>
+                            <div class="progress-bar"><span style="width: 38%"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="products" class="section">
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">Catalog</p>
+                    <h2 class="section-title">Products</h2>
+                    <p class="section-sub">Manage pricing, inventory, and visibility.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn primary add-btn1" onclick="openModal()">+ Add Product</button>
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="categoryFilter2">Category</label>
+                    <select id="categoryFilter2" onchange="filterProducts('2')">
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="searchInput2">Search</label>
+                    <div class="search-input">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput2" placeholder="Search products..." oninput="searchProducts('2')">
+                    </div>
+                </div>
+                <div class="filter-group filter-actions">
+                    <label class="sr-only" for="exportCsv">Export</label>
+                    <button id="exportCsv" class="btn ghost btncsv" onclick="exportCSV()">
+                        <i class="fa-solid fa-file-export"></i>
+                        Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table id="productTable2" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="orders" class="section">
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">Fulfillment</p>
+                    <h2 class="section-title">Orders</h2>
+                    <p class="section-sub">Track status, payments, and delivery progress.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn primary add-btn" onclick="addOrder()">+ Add Order</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table class="admin-table data-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersBody">
+                        <tr>
+                            <td colspan="5" class="empty-state">No orders yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="users" class="section">
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">Customers</p>
+                    <h2 class="section-title">Users</h2>
+                    <p class="section-sub">Manage access, profiles, and growth.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn primary add-btn" onclick="addUser()">+ Add User</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table class="admin-table data-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersBody">
+                        <tr>
+                            <td colspan="4" class="empty-state">No users registered.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="settings" class="section">
+            <div class="section-header">
+                <div>
+                    <p class="eyebrow">Preferences</p>
+                    <h2 class="section-title">Settings</h2>
+                    <p class="section-sub">Control admin profile and security.</p>
+                </div>
+            </div>
+
+            <div class="settings-box">
+                <label for="adminName">Admin Name</label>
+                <input type="text" id="adminName" placeholder="Enter your name">
+
+                <label for="adminEmail">Email</label>
+                <input type="email" id="adminEmail" placeholder="admin@example.com">
+
+                <label for="adminPassword">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="adminPassword" placeholder="Change password">
+                    <span id="togglePassword"><i class="fas fa-eye"></i></span>
+                </div>
+
+                <button class="btn primary saveBtn" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+
+        <div id="productModal" class="modal">
+            <div class="modal-content">
+                <h2>Add / Edit Product</h2>
+                <label for="pName">Name</label>
+                <input type="text" id="pName">
+
+                <label for="pPrice">Price</label>
+                <input type="number" id="pPrice">
+
+                <label for="pCategory">Category</label>
+                <input type="text" id="pCategory">
+
+                <label for="pImageFile">Image</label>
+                <input type="file" id="pImageFile" accept="image/*">
+                <img id="imagePreview" src="" alt="Preview">
+
+                <div class="modal-buttons">
+                    <button class="btn primary" onclick="saveProduct()">Save</button>
+                    <button class="btn ghost" onclick="closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

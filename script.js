@@ -1,12 +1,12 @@
-console.log("Admin Dashboard Loaded ✅");
+﻿console.log("Admin Dashboard Loaded");
 
-// ===== GLOBALS =====
+// ===== Globals =====
 let allProducts = [];
 let allOrders = [];
 let allUsers = [];
 let editIndex = null;
 
-// ====== Show Section ======
+// ===== Section Navigation =====
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.section');
     sections.forEach(sec => sec.style.display = (sec.id === sectionId) ? 'block' : 'none');
@@ -20,7 +20,7 @@ function showSection(sectionId) {
     if (sectionId === 'users') renderUsersTable();
 }
 
-// ====== Load Products / Orders / Users ======
+// ===== Load Products / Orders / Users =====
 async function loadProducts() {
     try {
         const response = await fetch("products.json");
@@ -34,13 +34,13 @@ async function loadProducts() {
         renderProductsTable();
         updateDashboardCounts();
         populateFilter('2');
-        console.log("✅ Products loaded!");
+        console.log("Products loaded");
     } catch (err) {
-        console.error("❌ Error loading products:", err);
+        console.error("Error loading products:", err);
     }
 }
 
-// ====== Render Products Table ======
+// ===== Render Products Table =====
 function renderProductsTable(filteredProducts) {
     const products = filteredProducts || allProducts;
     const table = document.querySelector("#productTable2 tbody");
@@ -50,7 +50,7 @@ function renderProductsTable(filteredProducts) {
     products.forEach((prod, index) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-            <td><img src="${prod.image}" width="50"></td>
+            <td><img src="${prod.image}" width="50" alt="${prod.name}"></td>
             <td>${prod.name}</td>
             <td>${prod.price} EGP</td>
             <td>${prod.category}</td>
@@ -63,7 +63,7 @@ function renderProductsTable(filteredProducts) {
     });
 }
 
-// ====== Update Dashboard Cards ======
+// ===== Update Dashboard Cards =====
 function updateDashboardCounts() {
     document.getElementById('countProducts').textContent = allProducts.length;
     document.getElementById('countOrders').textContent = allOrders.length;
@@ -73,38 +73,47 @@ function updateDashboardCounts() {
     document.getElementById('countRevenue').textContent = "$" + revenue;
 }
 
-// ====== Orders Table ======
+function getStatusClass(status) {
+    const value = String(status || "").toLowerCase();
+    if (value.includes("pending")) return "status--pending";
+    if (value.includes("ship")) return "status--info";
+    if (value.includes("deliver") || value.includes("complete") || value.includes("paid")) return "status--success";
+    if (value.includes("cancel") || value.includes("fail")) return "status--danger";
+    return "status--neutral";
+}
+
+// ===== Orders Table =====
 function renderOrdersTable() {
     const tbody = document.getElementById("ordersBody");
     if (!tbody) return;
     tbody.innerHTML = "";
     if (allOrders.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:#888;">No orders yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="empty-state">No orders yet.</td></tr>`;
         return;
     }
-    allOrders.forEach((order, index) => {
+    allOrders.forEach(order => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${order.id}</td>
             <td>${order.customer}</td>
             <td>$${order.total}</td>
             <td>${order.date}</td>
-            <td>${order.status}</td>
+            <td><span class="status ${getStatusClass(order.status)}">${order.status}</span></td>
         `;
         tbody.appendChild(row);
     });
 }
 
-// ====== Users Table ======
+// ===== Users Table =====
 function renderUsersTable() {
     const tbody = document.getElementById("usersBody");
     if (!tbody) return;
     tbody.innerHTML = "";
     if (allUsers.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px; color:#888;">No users registered.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" class="empty-state">No users registered.</td></tr>`;
         return;
     }
-    allUsers.forEach((user, index) => {
+    allUsers.forEach(user => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${user.id}</td>
@@ -116,7 +125,7 @@ function renderUsersTable() {
     });
 }
 
-// ====== Add Fake Order ======
+// ===== Add Fake Order =====
 function addOrder() {
     const id = "ORD" + (allOrders.length + 1);
     const customer = "Customer " + (allOrders.length + 1);
@@ -130,7 +139,7 @@ function addOrder() {
     updateDashboardCounts();
 }
 
-// ====== Add Fake User ======
+// ===== Add Fake User =====
 function addUser() {
     const id = "USR" + (allUsers.length + 1);
     const name = "User " + (allUsers.length + 1);
@@ -143,7 +152,7 @@ function addUser() {
     updateDashboardCounts();
 }
 
-// ====== Open / Close Modal ======
+// ===== Open / Close Modal =====
 function openModal(isEdit = false) {
     document.getElementById('productModal').style.display = 'flex';
     if (!isEdit) {
@@ -155,25 +164,12 @@ function openModal(isEdit = false) {
         document.getElementById('imagePreview').style.display = 'none';
     }
 }
+
 function closeModal() {
     document.getElementById('productModal').style.display = 'none';
 }
 
-// ====== Image Preview ======
-document.getElementById('pImageFile').addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (evt) {
-            const preview = document.getElementById('imagePreview');
-            preview.src = evt.target.result;
-            preview.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
-    }
-});
-
-// ====== Save / Edit Product ======
+// ===== Save / Edit Product =====
 function saveProduct() {
     const name = document.getElementById('pName').value;
     const price = document.getElementById('pPrice').value;
@@ -201,7 +197,7 @@ function saveProduct() {
     populateFilter('2');
 }
 
-// ====== Edit Product ======
+// ===== Edit Product =====
 function editProduct(index) {
     editIndex = index;
     const prod = allProducts[index];
@@ -214,7 +210,7 @@ function editProduct(index) {
     openModal(true);
 }
 
-// ====== Delete Product ======
+// ===== Delete Product =====
 function deleteProduct(index) {
     if (confirm("Are you sure to delete this product?")) {
         allProducts.splice(index, 1);
@@ -225,7 +221,7 @@ function deleteProduct(index) {
     }
 }
 
-// ====== Sidebar Active ======
+// ===== Sidebar Active =====
 const links = document.querySelectorAll('.sidebar a');
 links.forEach(link => {
     link.addEventListener('click', function () {
@@ -234,12 +230,12 @@ links.forEach(link => {
     });
 });
 
-// ====== Logout ======
+// ===== Logout =====
 function logout() {
     alert("Logging out...");
 }
 
-// ====== Populate Filter ======
+// ===== Populate Filter =====
 function populateFilter(section = '') {
     const filter = document.getElementById(`categoryFilter${section}`);
     if (!filter) return;
@@ -253,7 +249,7 @@ function populateFilter(section = '') {
     });
 }
 
-// ====== Filter Products ======
+// ===== Filter Products =====
 function filterProducts(section = '') {
     const filterVal = document.getElementById(`categoryFilter${section}`).value.toLowerCase();
     const table = document.getElementById(`productTable${section}`);
@@ -264,7 +260,7 @@ function filterProducts(section = '') {
     });
 }
 
-// ====== Search Products ======
+// ===== Search Products =====
 function searchProducts(section = '') {
     const query = document.getElementById(`searchInput${section}`).value.toLowerCase();
     const table = document.getElementById(`productTable${section}`);
@@ -275,7 +271,7 @@ function searchProducts(section = '') {
     });
 }
 
-// ====== Export CSV ======
+// ===== Export CSV =====
 function exportCSV() {
     let csv = "Name,Price,Category\n";
     allProducts.forEach(p => {
@@ -288,13 +284,7 @@ function exportCSV() {
     link.click();
 }
 
-// ====== Initialize ======
-document.addEventListener('DOMContentLoaded', () => {
-    showSection('dashboard');
-    loadProducts();
-});
-
-// ============ تحميل Settings ============
+// ===== Settings =====
 function loadSettings() {
     const settings = JSON.parse(localStorage.getItem('adminSettings')) || {};
     document.getElementById('adminName').value = settings.name || '';
@@ -302,7 +292,6 @@ function loadSettings() {
     document.getElementById('adminPassword').value = settings.password || '';
 }
 
-// ============ حفظ Settings ============
 function saveSettings() {
     const name = document.getElementById('adminName').value;
     const email = document.getElementById('adminEmail').value;
@@ -318,22 +307,39 @@ function saveSettings() {
     alert("Settings saved successfully!");
 }
 
-// ============ تحميل الإعدادات عند فتح الصفحة ============
+// ===== Initialize =====
 document.addEventListener('DOMContentLoaded', () => {
+    showSection('dashboard');
+    loadProducts();
     loadSettings();
-});
 
+    const imageInput = document.getElementById('pImageFile');
+    if (imageInput) {
+        imageInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = evt.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 
-// ===== Toggle Password =====
-const togglePassword = document.getElementById('togglePassword');
-const adminPassword = document.getElementById('adminPassword');
-
-togglePassword.addEventListener('click', () => {
-    if (adminPassword.type === 'password') {
-        adminPassword.type = 'text';
-        togglePassword.innerHTML = '<i class="fas fa-eye-slash"></i>';
-    } else {
-        adminPassword.type = 'password';
-        togglePassword.innerHTML = '<i class="fas fa-eye"></i>';
+    const togglePassword = document.getElementById('togglePassword');
+    const adminPassword = document.getElementById('adminPassword');
+    if (togglePassword && adminPassword) {
+        togglePassword.addEventListener('click', () => {
+            if (adminPassword.type === 'password') {
+                adminPassword.type = 'text';
+                togglePassword.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                adminPassword.type = 'password';
+                togglePassword.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        });
     }
 });
